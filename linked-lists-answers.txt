@@ -1,0 +1,163 @@
+## Excercise 
+
+1. What are some pros and cons of using linked lists instead of arrays? 
+
+Pros: Unlike array which has fixed size of memory, linked list stores data in any available space and 
+it's space efficient.  
+
+Cons: Have to access elements sequentially starting from the first node. 
+
+2. Come up with a real world example of a linked list.  
+
+Conga line where people hold their front person's shoulder forming a line. 
+Only the person on the very front and back have a space on either front or back. 
+There is no space for the people in the middle. 
+
+
+## Programming
+
+1) 
+
+original: 
+
+FUNCTION push(element)
+CREATE node
+SET node.value TO element
+SET node.next TO null
+
+IF the head node does not exist
+ THEN SET head to node
+ELSE
+ SET current to head
+ SET current.next to node
+END IF
+END FUNCTION
+
+
+modified: 
+
+FUNCTION push(element)
+CREATE node 
+SET node.value TO element
+SET node.next TO null
+
+IF the head node does not exist 
+    THEN SET head to node
+ELSE 
+    SET node.next to head // assign head to node's next 
+    SET head to newNode  // assign head to added node 
+END IF 
+END FUNCTION
+
+
+function push(element){
+   var newNode = {data: element, next: null} //second 
+   
+   if(this.head == null){
+       this.head = newNode; 
+   } else {
+       newNode.next = this.head; 
+       this.head = newNode;
+   }
+} 
+
+2) 
+
+FUNCTION removeDuplicate() 
+
+CREATE temp1 = null, temp2 = null, dup = null 
+Set head to temp1 
+
+    WHILE( temp1 != null && temp1.next != null) 
+        Set temp1 to temp2  
+
+        WHILE( temp2.next != null)
+            IF(temp1.data == temp2.next.data) 
+                Set temp2.next to dup 
+                Set temp2.next.next to temp2.next 
+            ELSE //meaning if there is no duplication 
+                Keep assigning temp2.next to temp2  
+
+        END WHILE
+
+    After WHILE loop finish, set temp1.next to temp1  
+    continue untill temp1 or temp1.next hit null  
+
+END FUNCTION 
+
+
+function removeDuplicate(){
+    var temp1 = null;
+    var temp2 = null;
+    var dup = null; 
+
+    temp1 = this.head;  
+
+    while( temp1 != null && temp1.next != null){
+        temp2 = temp1;
+
+        while( temp2.next != null){
+            if(temp1.data == temp2.next.data){
+                dup = temp2.next;
+                temp2.next = temp2.next.next;
+            } else {
+                temp2 = temp2.next;
+            }
+        }
+        temp1 = temp1.next;
+    }
+}
+
+
+3) 
+
+FUNCTION reverseList() 
+
+SET prev = null, current = node, next = null 
+
+WHILE(current != null) 
+    SET current.next to next 
+    SET prev to current.next so that direction reverse 
+    SET current to prev 
+    SET next to current  
+
+END WHILE 
+
+After you hit the null, SET prev to node 
+return node
+
+END FUNCTION     
+
+function reverseList(){
+    var prev = null;
+    var current = node;
+    var next = null;
+
+    while(current != null){
+        next = current.next;
+        current.next = prev;
+        prev = current;
+        current = next;
+    }
+    node = prev;
+    return node; 
+}
+
+
+
+        
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
