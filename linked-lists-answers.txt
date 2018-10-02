@@ -36,30 +36,43 @@ END FUNCTION
 
 modified: 
 
+1) Traverse back to the first node 
+2) Insert the newly created node to the end of the list
+
 FUNCTION push(element)
-CREATE node 
-SET node.value TO element
-SET node.next TO null
 
-IF the head node does not exist 
-    THEN SET head to node
-ELSE 
-    SET node.next to head // assign head to node's next 
-    SET head to newNode  // assign head to added node 
-END IF 
-END FUNCTION
+    IF the head node does not exist
+    THEN CREATE node 
+    SET node.value TO element 
+    SET node.next TO null
+
+    END IF
+
+    SET this.head to last // make copy of head node
+
+    WHILE last.next != null 
+        SET head to last.next 
+
+    END WHILE 
+
+    SET newNode to last.next 
+    RETURN this
+
+END FUNCTION 
 
 
-function push(element){
-   var newNode = {data: element, next: null} //second 
-   
-   if(this.head == null){
-       this.head = newNode; 
-   } else {
-       newNode.next = this.head; 
-       this.head = newNode;
-   }
-} 
+push(value) {
+        const newNode = {data: value, next: null}
+		if(this.head == null){
+			this.head = newNode;
+		}
+		var last = this.head; 
+
+		while( last.next != null){
+			last = last.next;
+		}
+		last.next = newNode;
+		return this;
 
 2) 
 
@@ -144,6 +157,64 @@ function reverseList(){
 }
 
 
+## Linked List Class
+
+class LinkedList {
+    constructor(value) {
+        this.head = null;
+        this.length = 0;
+        this.addToHead(value);
+		this.removeDuplicate();
+    }
+    
+    addToHead(value) {
+        const newNode = { value }; // 1
+        newNode.next = this.head;  // 2
+        this.head = newNode;       // 3
+        this.length++;
+        return this;
+    }
+
+	removeDuplicate(){
+        var temp1 = null;
+        var temp2 = null;
+        var dup = null; 
+
+        temp1 = this.head;  
+        console.log(temp1);
+
+        while( temp1 != null && temp1.next != null){
+            temp2 = temp1;
+            while( temp2.next != null){
+                if(temp1.data == temp2.next.data){
+                    dup = temp2.next;
+                    console.log(dup);
+                    temp2.next = temp2.next.next;
+                } else {
+                    temp2 = temp2.next;
+                }
+            }
+        }
+		temp1 = temp1.next;
+        console.log(temp1);
+		return temp1;
+	}
+
+    reverseList(){
+        var prev = null;
+        var current = this.head;
+        var next = null;
+
+        while(current != null){
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+            }
+        current = prev;
+        return current; 
+    }
+}
 
         
 
