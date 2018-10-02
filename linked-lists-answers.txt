@@ -99,27 +99,41 @@ Set head to temp1
 END FUNCTION 
 
 
-function removeDuplicate(){
-    var temp1 = null;
-    var temp2 = null;
-    var dup = null; 
+    removeDuplicate(){
+        var temp1 = null;
+        var temp2 = null;
+        var dup = null; 
 
-    temp1 = this.head;  
+        temp1 = this.head;  
+		console.log('console log temp1:');
+        console.log(temp1);
 
-    while( temp1 != null && temp1.next != null){
-        temp2 = temp1;
+        while( temp1 != null && temp1.next != null ){
+			console.log('went into while loop #1');
+            temp2 = temp1;
+			console.log('copy temp1 to temp2');
 
-        while( temp2.next != null){
-            if(temp1.data == temp2.next.data){
-                dup = temp2.next;
-                temp2.next = temp2.next.next;
-            } else {
-                temp2 = temp2.next;
+            while( temp2.next != null ){
+				console.log('temp1 and temp2 data')
+				console.log(temp1.data);
+				console.log(temp2.next.data);
+				console.log('went into while loop #2');
+                if(temp1.data == temp2.next.data){
+                    dup = temp2.next;
+					console.log('dup was created');
+                    console.log(dup);
+                    temp2.next = temp2.next.next;
+                } else {
+					console.log('coundnt find dup');
+                    temp2 = temp2.next;
+						
+                }
             }
+			temp1 = temp1.next;
         }
-        temp1 = temp1.next;
-    }
-}
+		
+		return temp1;
+	}
 
 
 3) 
@@ -141,20 +155,21 @@ return node
 
 END FUNCTION     
 
-function reverseList(){
-    var prev = null;
-    var current = node;
-    var next = null;
+reverseList(){
+        var prev = null;
+        var current = this.head;
+        var next = null;
 
-    while(current != null){
-        next = current.next;
-        current.next = prev;
-        prev = current;
-        current = next;
+        while(current != null){
+            next = current.next;
+			current.next = prev;
+            prev = current;
+            current = next;
+            }
+        current = prev;
+		this.head = current;
+        return current; 
     }
-    node = prev;
-    return node; 
-}
 
 
 ## Linked List Class
@@ -163,17 +178,25 @@ class LinkedList {
     constructor(value) {
         this.head = null;
         this.length = 0;
-        this.addToHead(value);
-		this.removeDuplicate();
+        this.push(value);
     }
-    
-    addToHead(value) {
-        const newNode = { value }; // 1
-        newNode.next = this.head;  // 2
-        this.head = newNode;       // 3
-        this.length++;
-        return this;
-    }
+
+    push(value) {
+        const newNode = {data: value, next: null}
+		if(this.head == null){
+			this.head = newNode;
+		} else {
+		var last = this.head; 
+
+		while( last.next != null){
+			console.log('went to while loop')
+			last = last.next;
+		    }
+		last.next = newNode;
+        }
+	return this;
+	}  
+
 
 	removeDuplicate(){
         var temp1 = null;
@@ -181,22 +204,19 @@ class LinkedList {
         var dup = null; 
 
         temp1 = this.head;  
-        console.log(temp1);
 
-        while( temp1 != null && temp1.next != null){
+        while( temp1 != null && temp1.next != null ){
             temp2 = temp1;
-            while( temp2.next != null){
+            while( temp2.next != null ){
                 if(temp1.data == temp2.next.data){
                     dup = temp2.next;
-                    console.log(dup);
                     temp2.next = temp2.next.next;
                 } else {
                     temp2 = temp2.next;
                 }
             }
+			temp1 = temp1.next;
         }
-		temp1 = temp1.next;
-        console.log(temp1);
 		return temp1;
 	}
 
@@ -207,11 +227,12 @@ class LinkedList {
 
         while(current != null){
             next = current.next;
-            current.next = prev;
+			current.next = prev;
             prev = current;
             current = next;
             }
         current = prev;
+		this.head = current;
         return current; 
     }
 }
